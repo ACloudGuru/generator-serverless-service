@@ -1,6 +1,6 @@
 {
   "name": "generator-serverless-service",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A scaffold for a nodejs Serverless service",
   "homepage": "https://github.com/ACloudGuru/generator-serverless-service",
   "author": {
