@@ -1,0 +1,4 @@
+AWS_PROFILE=<%- awsProfile %>
+AWS_REGION=<%- awsRegion %>
+AWS_ACCOUNT_ID=<%- awsAccountId %>
+SERVICE_ENV=dev

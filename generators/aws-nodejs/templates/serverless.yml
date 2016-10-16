@@ -1,0 +1,43 @@
+service: <%- serviceName %>
+provider:
+  name: aws
+  runtime: nodejs4.3
+
+custom:
+  writeEnvVars:
+      SERVERLESS_STAGE: ${opt:stage}
+      SERVERLESS_SERVICE_NAME: ${self:service}
+
+plugins:
+  - serverless-plugin-write-env-vars
+  - serverless-offline
+  - serverless-run-function-plugin
+
+package:
+  include:
+    - src/node_modules
+    - .env
+  exclude:
+    - coverage
+    - node_modules
+    - src/package.json
+    - test
+    - .editorconfig
+    - .env-deploy
+    - .envrc
+    - .eslintignore
+    - .eslintrc.yml
+    - .gitignore
+    - .node-version
+    - .travis.yml
+    - deploy.sh
+    - package.json
+    - README.md
+
+functions:
+  hello:
+    handler: src/index.hello
+
+#resources:
+#  Resources:
+#  Outputs:

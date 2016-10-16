@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+- '4.3'
+
+env:
+  global:
+    - AWS_REGION=us-east-1
+
+before_install:
+  - travis_retry npm i -g snyk
+
+install:
+  - travis_retry npm install && cd src && npm install && cd ..
+
+script: npm run lint && npm test && ./deploy.sh

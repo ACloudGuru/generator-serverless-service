@@ -1,0 +1,31 @@
+{
+  "name": "<%- serviceName %>",
+  "version": "0.0.1",
+  "description": "AWS NodeJS Serverless Service",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "sls offline",
+    "lint": "eslint .",
+    "test": "snyk test && npm run test:all",
+    "test:all": "npm run test:unit && npm run test:integration",
+    "test:unit": "istanbul cover _mocha test/unit -- -R spec --recursive",
+    "test:integration": "mocha test/integration"
+  },
+  "devDependencies": {
+    "bluebird": "^3.4.6",
+    "chai": "^3.5.0",
+    "eslint": "^3.8.0",
+    "eslint-config-standard": "^6.2.0",
+    "eslint-plugin-node": "^2.1.3",
+    "eslint-plugin-promise": "^3.0.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.1.2",
+    "serverless": "^1.0.0-rc.2",
+    "serverless-offline": "git+https://github.com/dherault/serverless-offline.git/#serverless_v1",
+    "serverless-plugin-write-env-vars": "^1.0.1",
+    "serverless-run-function-plugin": "^0.0.4",
+    "sinon": "^1.17.6",
+    "snyk": "^1.19.1"
+  }
+}
