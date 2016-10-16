@@ -12,20 +12,14 @@ npm install -g generator-serverless-service
 
 Then generate your new project:
 
+### AWS NodeJs
 ```bash
-yo serverless-service
+yo serverless-service:aws-nodejs
 ```
-
-## Getting To Know Yeoman
-
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
 
 ## License
 
-MIT © [John McKim](https://acloud.guru/)
+MIT © [A Cloud Guru](https://acloud.guru/)
 
 
 [npm-image]: https://badge.fury.io/js/generator-serverless-service.svg
