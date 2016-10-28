@@ -1,7 +1,21 @@
 language: node_js
 node_js:
-  - v6
-  - v5
-  - v4
-  - '0.12'
-  - '0.10'
+- v6
+- v5
+- v4
+- '0.12'
+- '0.10'
+
+script: npm run lint && npm test
+deploy:
+  provider: npm
+  email: accounts@acloud.guru
+  api_key:
+    secure: fbgEL0ZlZpHWT4hbCN157pZvqeUz4eBym1mgg9zhBISNBYstsK1AHIMRNRXoEV+ZvivNrupTsvnBKZoYHYEUTd7RqVVTzUVo4S5oW8WvKImgbW5kSXKc2apTc3S0SLaqr53zmOvcAukqU6PnAWwj0/Bmu055pr+4A7PaGIjYw8Crwjyc5CMPNzoEVYVl6koLmdUiXW/5ljI/slSSm13iS08g6Jl2dLCsSZtvBxiULzBWmESiht/2cfGY3I/FBHnt2veL42hhQjRIphdlBiuXaRxF633WVCyzQrawpXIMXb6d4RLcPDs/n4FCKhlDvkNDHwFWllug+IQlN4Doh98odcfzS4XcIDx15MyQ2vUALf5cQjNv1LoL6+/xKHWheBftDO99VA8UaATIVWxdbPw04WXzaIg4voqnX+Q8EMZCgnLTKKO512MQ7q1mfA8xxCyW/AInl+D6T9Mna3X0f/qvUFoclT3WYy4SIcr2BH1I4Saebp38WLafHEqeShWzpLtfhu9RFKc/0vrRkdv/cDxuzZY2CA8YcVKvX0jg5HS4VaE0IZQm6OkfxN3UuoobwKR1+s0HY0Q+FchU7khU+EOVBiJxfaTYDlu+EqSn3QHgllJY9IN4sGXAYNlYQHsD+FrWyZsa7Dj3gcCbG/3e3T3JHo+4v8bVXaFcfdPSOFrXgVM=
+  on:
+    tags: true
+    repo: ACloudGuru/generator-serverless-service
+    branch: master
+notifications:
+  slack:
+    secure: OYBrVBvXmaREAmnK8muHfwQfsui4RuOixPiZ+EbGFvk3f32pP7wMBhM+P4fNbTOSVTI4qthGxcLX9GFq5Kx7EAuZllHM+rUOheWUtHXMyamNWWzvWcrUTVUNacO+z2e9vZejrjKhSHZuAIQ1tkZxJsLR6IIXhFLFOy228hBePHl+r1G84Bfng1yv2UCQyRAQriF8oItMJNkoQCFzT34xiL50eV+d3F83wwYyIDcxX6ybw6BOqh0DiWcfcROFp0UZUcRPueNMkKQwHx6a7kjfQdJGIMwGmesb2pFjOElkVXu1DV1UPp0icn+W/7fh1UQW+De8C0TGK/hJNhJC12yRWHjq2IQEtHF6GXUxvj05Qsodb7C32vRjiaQSARAv00ZTC7HIWD0Cah38g7gkiynDdsYJz8rEixSHVhgDaV/l75ybaoCxBuqicE+4ZEmZ+y/6o9o58RjvqQ0mq2YNDSiJ3ssabi3YSBKZG3w1BQ9kZZXcoWZn/8/1hqNWpa+Jr8ReASLr55s2/kme1JCeiCeZTc+i7gMNqNaBS6QtgyYcCY2x5QXjReNPa4u1Ssq9pD8j7nOzwmep/E1eCxqpuxgL1vE01SuoZ0SMCKIzSKp/HqMp3octA3omf/kh3JWVme25MFm+7XpuEVjkHCPCAGPlrSA3kCgdGevVbD0O/3fREjw=
