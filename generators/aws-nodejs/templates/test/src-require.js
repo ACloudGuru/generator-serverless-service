@@ -1,6 +1,6 @@
 'use strict';
 
-const srcPath = require('src-path');
+const srcPath = require('./src-path');
 
 const srcRequire = (name) => require(srcPath(name))
 

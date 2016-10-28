@@ -5,7 +5,7 @@ node_js:
   - v6
 
 before_script:
-  - export DIRENV_PATH=/tmp/direnv2.3.0.linux-amd64
+  - export DIRENV_PATH=~/direnv2.3.0.linux-amd64
   - mkdir $DIRENV_PATH
   - wget https://zimbatm.s3.amazonaws.com/direnv/direnv2.3.0.linux-amd64 -O $DIRENV_PATH/direnv
   - export PATH=$PATH:$DIRENV_PATH
