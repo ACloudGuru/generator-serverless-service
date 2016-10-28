@@ -4,29 +4,24 @@ provider:
   runtime: nodejs4.3
 
 custom:
-  writeEnvVars:
-      SERVERLESS_STAGE: ${opt:stage}
-      SERVERLESS_SERVICE_NAME: ${self:service}
+  packageEnv:
+    fileName: .env-${opt:stage}
 
 plugins:
-  - serverless-plugin-write-env-vars
+  - serverless-plugin-package-dotenv-file
   - serverless-offline
   - serverless-run-function-plugin
 
 package:
-  include:
-    - src/node_modules
-    - .env
   exclude:
-    - coverage
-    - node_modules
+    - coverage/**
+    - node_modules/**
     - src/package.json
-    - test
+    - test/**
     - .editorconfig
-    - .env-deploy
+    - .env-*
     - .envrc
-    - .eslintignore
-    - .eslintrc.yml
+    - .eslint*
     - .gitignore
     - .node-version
     - .travis.yml

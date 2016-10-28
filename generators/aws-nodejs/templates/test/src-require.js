@@ -1,11 +1,8 @@
 'use strict';
 
-const path = require('path');
+const srcPath = require('src-path');
 
-const srcRequire = function(name) {
-  const requirePath = path.resolve(__dirname, '../src', name)
-  return require(requirePath);
-}
+const srcRequire = (name) => require(srcPath(name))
 
 if(!global.srcRequire) {
   global.srcRequire = srcRequire;
