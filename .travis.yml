@@ -4,6 +4,10 @@ node_js:
   - '5.11'
   - '6.2'
 
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y direnv
+
 install: npm install
 script: npm test
 
