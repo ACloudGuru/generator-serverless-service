@@ -1,12 +1,13 @@
 language: node_js
 node_js:
-  - '4.4'
-  - '5.11'
-  - '6.2'
+  - v4
+  - v5
+  - v6
 
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y direnv
+before_script:
+  - export DIRENV_PATH=/tmp/direnv2.3.0.linux-amd64
+  - wget https://zimbatm.s3.amazonaws.com/direnv/direnv2.3.0.linux-amd64 -O $DIRENV_PATH/direnv
+  - export PATH=$PATH:$PWD$DIRENV_PATH
 
 install: npm install
 script: npm test

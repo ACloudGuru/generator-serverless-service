@@ -193,10 +193,8 @@ module.exports = generators.Base.extend({
   },
 
   install: function () {
-    if(!process.env.CI) { // skip runing this on CI
-      this.installDependencies({ bower: false });
+    this.installDependencies({ bower: false });
 
-      this.spawnCommand('direnv', ['allow', this.destinationRoot()]);
-    }
+    this.spawnCommand('direnv', ['allow', this.destinationRoot()]);
   }
 });
