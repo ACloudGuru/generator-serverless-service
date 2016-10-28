@@ -3,43 +3,86 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
-describe('generator-serverless-service:aws-nodejs', function () {
-  const props = {
+describe('generator-serverless-service:aws-nodejs', () => {
+  const generatorPath = path.join(__dirname, '../generators/aws-nodejs');
+  const baseProps = {
     serviceName: 'test-service',
     awsProfile: 'aws-profile',
     awsRegion: 'us-blah-2',
-    awsAccountId: '123456'
+    awsAccountId: '123456',
+    useSnyk: false,
+    useMocha: false,
+    useEslint: false
   };
+  const baseFiles = [
+    'src/index.js',
+    'src/package.json',
+    'test/integration/index.js',
+    'test/unit/index.js',
+    'test/index.js',
+    'test/src-path.js',
+    'test/src-require.js',
+    '.editorconfig',
+    '.env-deploy-dev',
+    '.env-production',
+    '.env-staging',
+    '.gitignore',
+    '.node-version',
+    '.travis.yml',
+    'deploy.sh',
+    'event.json',
+    'package.json',
+    'README.md',
+    'serverless.yml'
+  ];
+  const esLintFiles = [
+    'test/.eslintrc',
+    '.eslintignore',
+    '.eslintrc.yml'
+  ];
 
-  before(function () {
-    return helpers.run(path.join(__dirname, '../generators/aws-nodejs'))
-      .withPrompts(props)
-      .toPromise();
+  describe('with useSnyk', () => {
+    before(() => helpers
+          .run(generatorPath)
+          .withPrompts(Object.assign(baseProps, {
+            useSnyk: true
+          }))
+          .toPromise()
+    );
+
+    it('creates files', () => {
+      assert.file(baseFiles);
+      assert.noFile(esLintFiles);
+    });
   });
 
-  it('creates files', function () {
-    assert.file([
-      'src/index.js',
-      'src/package.json',
-      'test/integration/index.js',
-      'test/unit/index.js',
-      'test/.eslintrc',
-      'test/index.js',
-      'test/src-require.js',
-      '.editorconfig',
-      '.env-deploy',
-      '.env-dev',
-      '.envrc',
-      '.eslintignore',
-      '.eslintrc.yml',
-      '.gitignore',
-      '.node-version',
-      '.travis.yml',
-      'deploy.sh',
-      'event.json',
-      'package.json',
-      'README.md',
-      'serverless.yml'
-    ]);
+  describe('with useMocha', () => {
+    before(() => helpers
+          .run(generatorPath)
+          .withPrompts(Object.assign(baseProps, {
+            useMocha: true
+          }))
+          .toPromise()
+    );
+
+    it('creates files', () => {
+      assert.file(baseFiles);
+      assert.noFile(esLintFiles);
+    });
+  });
+
+  describe('with useEslint', () => {
+    before(() => helpers
+          .run(generatorPath)
+          .withPrompts(Object.assign(baseProps, {
+            useEslint: true
+          }))
+          .toPromise()
+    );
+
+    it('creates files', () => {
+      const withEsLintFiles = baseFiles.concat(esLintFiles);
+      assert.file(withEsLintFiles);
+    });
   });
 });
