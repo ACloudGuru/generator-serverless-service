@@ -161,7 +161,6 @@ module.exports = generators.Base.extend({
 
     const rootFiles = [
       '.editorconfig',
-      '.envrc',
       '.gitignore',
       '.node-version',
       '.travis.yml',
@@ -178,6 +177,7 @@ module.exports = generators.Base.extend({
     }).bind(this));
 
     const rootTemplates = {
+      '.template-envrc': '.envrc',
       '.template-env-deploy-dev': '.env-deploy-dev',
       '.template-env-production': '.env-production',
       '.template-env-staging': '.env-staging',
