@@ -12,4 +12,17 @@ before_install:
 install:
   - travis_retry npm install && cd src && npm install && cd ..
 
-script: npm run lint && npm test && ./deploy.sh
+script: npm run lint && npm test
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: ./deploy.sh production
+    on:
+      branch: master
+
+  - provider: script
+    skip_cleanup: true
+    script: ./deploy.sh staging
+    on:
+      branch: develop
