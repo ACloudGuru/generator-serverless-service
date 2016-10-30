@@ -150,43 +150,40 @@ module.exports = generators.Base.extend({
     this.writePackageJson();
     this.writeSrcPackageJson();
 
-    if(!this.fs.exis)
     this.fs.copy(this.templatePath('src/**'), this.destinationPath('src'));
-
     this.fs.copy(this.templatePath('test/**'), this.destinationPath('test'));
 
+    const rootFiles = {
+      'deploy.sh': '',
+      'editorconfig.template': '.editorconfig',
+      'env-production.template': '.env-production',
+      'env-staging.template': '.env-staging',
+      'envrc.template': '.envrc',
+      'event.json': '',
+      'gitignore.template': '.gitignore',
+      'node-version.template': '.node-version',
+      'travis.yml.template': '.travis.yml',
+      'serverless.yml': ''
+    };
+
     if(this.props.useEslint) {
-      this.fs.copy(this.templatePath('test/.eslintrc'), this.destinationPath('test/.eslintrc'));
+      rootFiles['test/eslintrc.template'] = 'test/.eslintrc';
+      rootFiles['eslintignore.template'] = '.eslintignore';
+      rootFiles['eslintrc.yml.template'] = '.eslintrc.yml';
     }
 
-    const rootFiles = [
-      '.editorconfig',
-      '.gitignore',
-      '.node-version',
-      '.travis.yml',
-      'deploy.sh',
-      'event.json',
-    ];
-
-    if(this.props.useEslint) {
-      rootFiles.push('.eslintignore', '.eslintrc.yml');
-    }
-
-    rootFiles.forEach((function(path) {
-      this.fs.copy(this.templatePath(path), this.destinationPath(path));
+    Object.keys(rootFiles).forEach((function(path) {
+      const dest = rootFiles[path] || path;
+      this.fs.copy(this.templatePath(path), this.destinationPath(dest));
     }).bind(this));
 
     const rootTemplates = {
-      '.template-envrc': '.envrc',
-      '.template-env-deploy-dev': '.env-deploy-dev',
-      '.template-env-production': '.env-production',
-      '.template-env-staging': '.env-staging',
+      'env-deploy-dev.template': '.env-deploy-dev',
       'README.md': '',
       'serverless.yml': ''
     };
-    const rootTemplateKeys = Object.keys(rootTemplates);
 
-    rootTemplateKeys.forEach((function(path) {
+    Object.keys(rootTemplates).forEach((function(path) {
       const dest = rootTemplates[path] || path;
       this.fs.copyTpl(this.templatePath(path), this.destinationPath(dest), this.props);
     }).bind(this));
