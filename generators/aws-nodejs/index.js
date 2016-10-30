@@ -150,46 +150,44 @@ module.exports = generators.Base.extend({
     this.writePackageJson();
     this.writeSrcPackageJson();
 
-    if(!this.fs.exis)
-    this.fs.copy(this.templatePath('src/**'), this.destinationPath('src'));
-
-    this.fs.copy(this.templatePath('test/**'), this.destinationPath('test'));
-
-    if(this.props.useEslint) {
-      this.fs.copy(this.templatePath('test/.eslintrc'), this.destinationPath('test/.eslintrc'));
-    }
-
-    const rootFiles = [
-      '.editorconfig',
-      '.gitignore',
-      '.node-version',
-      '.travis.yml',
-      'deploy.sh',
-      'event.json',
-    ];
+    const files = {
+      'src/**': 'src',
+      'test/**': 'test',
+      'deploy.sh': '',
+      'editorconfig.template': '.editorconfig',
+      'env-production.template': '.env-production',
+      'env-staging.template': '.env-staging',
+      'envrc.template': '.envrc',
+      'event.json': '',
+      'gitignore.template': '.gitignore',
+      'node-version.template': '.node-version',
+      'travis.yml.template': '.travis.yml',
+      'serverless.yml': ''
+    };
 
     if(this.props.useEslint) {
-      rootFiles.push('.eslintignore', '.eslintrc.yml');
+      files['test/eslintrc.template'] = 'test/.eslintrc';
+      files['eslintignore.template'] = '.eslintignore';
+      files['eslintrc.yml.template'] = '.eslintrc.yml';
     }
 
-    rootFiles.forEach((function(path) {
-      this.fs.copy(this.templatePath(path), this.destinationPath(path));
-    }).bind(this));
-
-    const rootTemplates = {
-      '.template-envrc': '.envrc',
-      '.template-env-deploy-dev': '.env-deploy-dev',
-      '.template-env-production': '.env-production',
-      '.template-env-staging': '.env-staging',
+    const templates = {
+      'env-deploy-dev.template': '.env-deploy-dev',
       'README.md': '',
       'serverless.yml': ''
     };
-    const rootTemplateKeys = Object.keys(rootTemplates);
 
-    rootTemplateKeys.forEach((function(path) {
-      const dest = rootTemplates[path] || path;
-      this.fs.copyTpl(this.templatePath(path), this.destinationPath(dest), this.props);
-    }).bind(this));
+    const plainCopy = (path, dest) => this.fs.copy(path, dest);
+    const templateCopy = (path, dest) => this.fs.copyTpl(path, dest, this.props);
+    const iterateFiles = ((files, action) => {
+      Object.keys(files).forEach((function(path) {
+        const dest = files[path] || path;
+        action(this.templatePath(path), this.destinationPath(dest));
+      }).bind(this));
+    }).bind(this);
+
+    iterateFiles(files, plainCopy);
+    iterateFiles(templates, templateCopy);
   },
 
   install: function () {
