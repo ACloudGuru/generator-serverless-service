@@ -150,10 +150,9 @@ module.exports = generators.Base.extend({
     this.writePackageJson();
     this.writeSrcPackageJson();
 
-    this.fs.copy(this.templatePath('src/**'), this.destinationPath('src'));
-    this.fs.copy(this.templatePath('test/**'), this.destinationPath('test'));
-
-    const rootFiles = {
+    const files = {
+      'src/**': 'src',
+      'test/**': 'test',
       'deploy.sh': '',
       'editorconfig.template': '.editorconfig',
       'env-production.template': '.env-production',
@@ -167,26 +166,28 @@ module.exports = generators.Base.extend({
     };
 
     if(this.props.useEslint) {
-      rootFiles['test/eslintrc.template'] = 'test/.eslintrc';
-      rootFiles['eslintignore.template'] = '.eslintignore';
-      rootFiles['eslintrc.yml.template'] = '.eslintrc.yml';
+      files['test/eslintrc.template'] = 'test/.eslintrc';
+      files['eslintignore.template'] = '.eslintignore';
+      files['eslintrc.yml.template'] = '.eslintrc.yml';
     }
 
-    Object.keys(rootFiles).forEach((function(path) {
-      const dest = rootFiles[path] || path;
-      this.fs.copy(this.templatePath(path), this.destinationPath(dest));
-    }).bind(this));
-
-    const rootTemplates = {
+    const templates = {
       'env-deploy-dev.template': '.env-deploy-dev',
       'README.md': '',
       'serverless.yml': ''
     };
 
-    Object.keys(rootTemplates).forEach((function(path) {
-      const dest = rootTemplates[path] || path;
-      this.fs.copyTpl(this.templatePath(path), this.destinationPath(dest), this.props);
-    }).bind(this));
+    const plainCopy = (path, dest) => this.fs.copy(path, dest);
+    const templateCopy = (path, dest) => this.fs.copyTpl(path, dest, this.props);
+    const iterateFiles = ((files, action) => {
+      Object.keys(files).forEach((function(path) {
+        const dest = files[path] || path;
+        action(this.templatePath(path), this.destinationPath(dest));
+      }).bind(this));
+    }).bind(this);
+
+    iterateFiles(files, plainCopy);
+    iterateFiles(templates, templateCopy);
   },
 
   install: function () {
