@@ -1,16 +1,18 @@
 language: node_js
 node_js:
-- '4.3'
+  - '4.3'
 
 env:
   global:
-    - AWS_REGION=us-east-1
+    - AWS_REGION=<%- awsRegion %>
 
+<% if(useSnyk) { %>
 before_install:
   - travis_retry npm i -g snyk
+<% } %>
 
 install:
-  - travis_retry npm install && cd src && npm install && cd ..
+  - travis_retry ./install.sh
 
 script: npm run lint && npm test
 

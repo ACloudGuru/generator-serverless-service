@@ -1,17 +1,7 @@
 #!/bin/bash
 set -e
 
-if [[ $CI == "true" ]]; then
-  if [[ $TRAVIS_PULL_REQUEST != "false" ]]; then
-    echo "Not deploying changes on pull request";
-    exit 0;
-  fi
-
-  if [[ $TRAVIS_BRANCH != "master" ]]; then
-    echo "Not deploying changes from branch $TRAVIS_BRANCH";
-    exit 0;
-  fi
-fi
+SERVICE_ENV=$1
 
 if [ -z ${AWS_REGION+x} ]; then
   echo "Please set a region";
