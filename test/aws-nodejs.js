@@ -11,7 +11,6 @@ describe('generator-serverless-service:aws-nodejs', function() {
     serviceName: 'test-service',
     awsProfile: 'aws-profile',
     awsRegion: 'us-blah-2',
-    awsAccountId: '123456',
     useSnyk: false,
     useMocha: false,
     useEslint: false

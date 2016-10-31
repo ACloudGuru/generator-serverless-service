@@ -38,11 +38,6 @@ module.exports = generators.Base.extend({
         validate: required
       },
       {
-        type: 'String',
-        name: 'awsAccountId',
-        message: 'AWS Account Id?'
-      },
-      {
         type: 'confirm',
         name: 'useDirenv',
         message: 'Would you like to use direnv to load env variables and manage serverless locally?'
@@ -163,16 +158,18 @@ module.exports = generators.Base.extend({
     const files = {
       'src/**': 'src',
       'test/**': 'test',
-      'deploy.sh': '',
       'editorconfig.template': '.editorconfig',
       'env-production.template': '.env-production',
       'env-staging.template': '.env-staging',
-      'envrc.template': '.envrc',
       'event.json': '',
       'gitignore.template': '.gitignore',
       'install.sh': '',
       'node-version.template': '.node-version'
     };
+
+    if(this.props.useDirenv) {
+      files['envrc.template'] = '.envrc';
+    }
 
     if(this.props.useEslint) {
       files['test/eslintrc.template'] = 'test/.eslintrc';
@@ -181,6 +178,7 @@ module.exports = generators.Base.extend({
     }
 
     const templates = {
+      'deploy.sh': '',
       'env-deploy-dev.template': '.env-deploy-dev',
       'README.md': '',
       'serverless.yml': '',
