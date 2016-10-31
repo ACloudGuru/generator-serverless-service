@@ -201,6 +201,8 @@ module.exports = generators.Base.extend({
   install: function () {
     this.installDependencies({ bower: false });
 
-    this.spawnCommand('direnv', ['allow', this.destinationRoot()]);
+    if(this.props.useDirenv) {
+      this.spawnCommand('direnv', ['allow', this.destinationRoot()]);
+    }
   }
 });
