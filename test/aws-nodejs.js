@@ -11,10 +11,10 @@ describe('generator-serverless-service:aws-nodejs', function() {
     serviceName: 'test-service',
     awsProfile: 'aws-profile',
     awsRegion: 'us-blah-2',
-    awsAccountId: '123456',
     useSnyk: false,
     useMocha: false,
-    useEslint: false
+    useEslint: false,
+    useDirenv: false
   };
   const baseFiles = [
     'src/index.js',
@@ -37,6 +37,9 @@ describe('generator-serverless-service:aws-nodejs', function() {
     'package.json',
     'README.md',
     'serverless.yml'
+  ];
+  const dirEnvFiles = [
+    '.envrc'
   ];
   const esLintFiles = [
     'test/.eslintrc',
@@ -86,6 +89,21 @@ describe('generator-serverless-service:aws-nodejs', function() {
     it('creates files', () => {
       const withEsLintFiles = baseFiles.concat(esLintFiles);
       assert.file(withEsLintFiles);
+    });
+  });
+
+  describe('with useDirenv', () => {
+    before(() => helpers
+          .run(generatorPath)
+          .withPrompts(Object.assign(baseProps, {
+            useDirenv: true
+          }))
+          .toPromise()
+    );
+
+    it('creates files', () => {
+      const withDirenvFiles = baseFiles.concat(dirEnvFiles);
+      assert.file(withDirenvFiles);
     });
   });
 });
