@@ -26,6 +26,7 @@ package:
     - .node-version
     - .travis.yml
     - deploy.sh
+    - install.sh
     - package.json
     - README.md
 
