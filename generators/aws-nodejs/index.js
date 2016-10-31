@@ -160,9 +160,8 @@ module.exports = generators.Base.extend({
       'envrc.template': '.envrc',
       'event.json': '',
       'gitignore.template': '.gitignore',
-      'node-version.template': '.node-version',
-      'travis.yml.template': '.travis.yml',
-      'serverless.yml': ''
+      'install.sh': '',
+      'node-version.template': '.node-version'
     };
 
     if(this.props.useEslint) {
@@ -174,7 +173,8 @@ module.exports = generators.Base.extend({
     const templates = {
       'env-deploy-dev.template': '.env-deploy-dev',
       'README.md': '',
-      'serverless.yml': ''
+      'serverless.yml': '',
+      'travis.yml.template': '.travis.yml'
     };
 
     const plainCopy = (path, dest) => this.fs.copy(path, dest);

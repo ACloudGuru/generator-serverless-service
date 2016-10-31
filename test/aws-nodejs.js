@@ -33,6 +33,7 @@ describe('generator-serverless-service:aws-nodejs', function() {
     '.travis.yml',
     'deploy.sh',
     'event.json',
+    'install.sh',
     'package.json',
     'README.md',
     'serverless.yml'
