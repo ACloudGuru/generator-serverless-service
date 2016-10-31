@@ -44,6 +44,11 @@ module.exports = generators.Base.extend({
       },
       {
         type: 'confirm',
+        name: 'useDirenv',
+        message: 'Would you like to use direnv to load env variables and manage serverless locally?'
+      },
+      {
+        type: 'confirm',
         name: 'useSnyk',
         message: 'Would you like to install snyk to detect package vulnerabilities?'
       },
@@ -69,18 +74,23 @@ module.exports = generators.Base.extend({
 
     if(!pkg.name) pkg.name = this.props.serviceName;
 
-    extend(pkg, {
+    const serverlessConfig = {
       scripts: {
         "start": "sls offline",
       },
       devDependencies: {
         "bluebird": "^3.4.6",
-        "serverless": "^1.0.0",
         "serverless-offline": "3.1.0",
         "serverless-plugin-package-dotenv-file": "^0.0.1",
         "serverless-run-function-plugin": "^0.0.4",
       }
-    });
+    };
+
+    if(this.props.useDirenv) {
+      serverlessConfig.devDependencies["serverless"] = "^1.0.0";
+    }
+
+    extend(pkg, serverlessConfig);
 
     if(this.props.useMocha) {
       extend(pkg, {

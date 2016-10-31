@@ -15,5 +15,9 @@ fi
 
 echo "Deploying to stage $SERVICE_ENV"
 
+<% if(useDirenv) { %>
 # use the serverless version installed in the project
 ./node_modules/.bin/sls deploy --stage $SERVICE_ENV --region $AWS_REGION --verbose
+<% } else { %>
+sls deploy --stage $SERVICE_ENV --region $AWS_REGION --verbose
+<% } %>
