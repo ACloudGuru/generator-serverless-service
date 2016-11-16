@@ -15,6 +15,9 @@ before_script:
 install: npm install
 script: npm test
 
+after_success:
+  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf ./coverage
+
 deploy:
   provider: npm
   email: accounts@acloud.guru
@@ -24,6 +27,8 @@ deploy:
     tags: true
     repo: ACloudGuru/generator-serverless-service
     branch: master
+    node: 'v4'
+
 notifications:
   slack:
     secure: OYBrVBvXmaREAmnK8muHfwQfsui4RuOixPiZ+EbGFvk3f32pP7wMBhM+P4fNbTOSVTI4qthGxcLX9GFq5Kx7EAuZllHM+rUOheWUtHXMyamNWWzvWcrUTVUNacO+z2e9vZejrjKhSHZuAIQ1tkZxJsLR6IIXhFLFOy228hBePHl+r1G84Bfng1yv2UCQyRAQriF8oItMJNkoQCFzT34xiL50eV+d3F83wwYyIDcxX6ybw6BOqh0DiWcfcROFp0UZUcRPueNMkKQwHx6a7kjfQdJGIMwGmesb2pFjOElkVXu1DV1UPp0icn+W/7fh1UQW+De8C0TGK/hJNhJC12yRWHjq2IQEtHF6GXUxvj05Qsodb7C32vRjiaQSARAv00ZTC7HIWD0Cah38g7gkiynDdsYJz8rEixSHVhgDaV/l75ybaoCxBuqicE+4ZEmZ+y/6o9o58RjvqQ0mq2YNDSiJ3ssabi3YSBKZG3w1BQ9kZZXcoWZn/8/1hqNWpa+Jr8ReASLr55s2/kme1JCeiCeZTc+i7gMNqNaBS6QtgyYcCY2x5QXjReNPa4u1Ssq9pD8j7nOzwmep/E1eCxqpuxgL1vE01SuoZ0SMCKIzSKp/HqMp3octA3omf/kh3JWVme25MFm+7XpuEVjkHCPCAGPlrSA3kCgdGevVbD0O/3fREjw=
