@@ -43,25 +43,28 @@ yo serverless-service:aws-nodejs
 
 ```
 |_ src
-  |_ index.js      // loads .env file - wrap handlers here
-  |_ package.json  // save lambda dependencies here
+  |_ index.js          // loads .env file - wrap handlers here
+  |_ package.json      // save lambda dependencies here
 |_ test
   |_ unit
   |_ integration
   |_ .eslintrc
   |_ index.js
 |_ .editorconfig
-|_ .env-deploy-dev // loads AWS_PROFILE and AWS_REGION
-|_ .env-production // copied to .env on production deploy
-|_ .env-staging    // copied to .env on staging deploy
-|_ .envrc          // loads .env-deploy-dev and serverless
+|_ .env-deploy-dev     // loads AWS_PROFILE and AWS_REGION
+|_ .env-production     // copied to .env on production deploy
+|_ .env-staging        // copied to .env on staging deploy
+|_ .envrc              // loads .env-deploy-dev and serverless
 |_ .eslintignore
-|_ .eslintrc.yml   // eslint config
+|_ .eslintrc.yml       // eslint config
 |_ .gitignore
-|_ .node-version   // set node version to 4.3
-|_ .travis.yml     // deploy project with travis
+|_ .node-version       // set node version to 4.3
+|_ .travis.yml         // deploy project with travis
 |_ README.md
+|_ create-enc-keys.sh  // creates a key and iv stored in .ci-keys
+|_ decrypt-enc-vars.sh // decrypts .ci-secrets.tar.enc -> .ci-secrets.tar using .ci-keys or keys stored in CI
 |_ deploy.sh
+|_ encrypt-enc-vars.sh // encrypts .ci-secrets.tar -> .ci-secrets.tar.enc using .ci-keys
 |_ event.json
 |_ package.json
 |_ serverless.yml  // configure your serverless service
