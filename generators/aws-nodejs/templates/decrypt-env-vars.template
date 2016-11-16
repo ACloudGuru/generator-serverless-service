@@ -1,0 +1,37 @@
+#!/bin/bash
+set -e
+
+CI_KEYS_FILE=.ci-keys
+ENV_ZIP_FILE=.ci-secrets.tar
+ENC_ENV_ZIP_FILE=.ci-secrets.tar.enc
+
+if [ ! -f $ENC_ENV_ZIP_FILE ]; then
+  echo "File not found: $ENC_ENV_ZIP_FILE";
+  exit 1
+fi
+
+if [ "$CI" != "true" ]; then
+<% if(useDirenv) { %>
+  command -v direnv >/dev/null 2>&1 || { echo "Please install direnv" >&2; exit 1; }
+
+  echo "Loading encryption keys from $CI_KEYS_FILE"
+  eval "$(direnv stdlib)"
+
+  dotenv "$CI_KEYS_FILE"
+
+  encrypted_key=$key
+  encrypted_iv=$iv
+<% } else { %>
+  if [ -z "$encrypted_key" ] || [ -z "$encrypted_iv" ]; then
+    echo "Please ensure encrypted_key and encrypted_iv are set"
+  fi
+<% } %>
+fi
+
+echo "Decrypting $ENC_ENV_ZIP_FILE to $ENV_ZIP_FILE"
+openssl aes-256-cbc -K "$encrypted_key" -iv "$encrypted_iv" -in "$ENC_ENV_ZIP_FILE" -out "$ENV_ZIP_FILE" -d
+
+if [ "$CI" == "true" ]; then
+  echo "Extracting $ENV_ZIP_FILE"
+  tar -x -v -f $ENV_ZIP_FILE
+fi

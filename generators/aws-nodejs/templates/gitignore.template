@@ -5,3 +5,5 @@ coverage
 .env-*
 .env
 .serverless
+.ci-keys
+.ci-secrets.tar

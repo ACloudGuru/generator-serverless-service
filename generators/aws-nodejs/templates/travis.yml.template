@@ -5,12 +5,11 @@ node_js:
 env:
   global:
     - AWS_REGION=<%- awsRegion %>
-
-<% if(useSnyk) { %>
+<% if(useSnyk || useStoredEnvVars) { %>
 before_install:
-  - travis_retry npm i -g snyk
+<% if(useSnyk) { %>  - travis_retry npm i -g snyk<% } %>
+<% if(useStoredEnvVars) { %>  - "./decrypt-env-vars.sh"<% } %>
 <% } %>
-
 install:
   - travis_retry ./install.sh
 
@@ -28,3 +27,6 @@ deploy:
     script: ./deploy.sh staging
     on:
       branch: develop
+
+after_deploy:
+  - echo "Finished deploying <%- serviceName %>"

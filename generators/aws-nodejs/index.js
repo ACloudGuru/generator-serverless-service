@@ -44,6 +44,11 @@ module.exports = generators.Base.extend({
       },
       {
         type: 'confirm',
+        name: 'useStoredEnvVars',
+        message: 'Would you like to store an encrypted copy of your env vars in git?'
+      },
+      {
+        type: 'confirm',
         name: 'useSnyk',
         message: 'Would you like to install snyk to detect package vulnerabilities?'
       },
@@ -184,6 +189,12 @@ module.exports = generators.Base.extend({
       'serverless.yml': '',
       'travis.yml.template': '.travis.yml'
     };
+
+    if(this.props.useStoredEnvVars) {
+      files['create-enc-keys.template'] = 'create-enc-keys.sh';
+      files['decrypt-env-vars.template'] = 'decrypt-env-vars.sh';
+      files['encrypt-env-vars.template'] = 'encrypt-env-vars.sh';
+    }
 
     const plainCopy = (path, dest) => this.fs.copy(path, dest);
     const templateCopy = (path, dest) => this.fs.copyTpl(path, dest, this.props);
