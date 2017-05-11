@@ -1,7 +1,0 @@
-set -e
-
-dotenv .env-deploy-dev
-
-PATH_add node_modules/.bin
-
-alias sls=serverless

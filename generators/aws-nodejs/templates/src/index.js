@@ -1,8 +1,5 @@
 'use strict';
 
-require('dotenv').config();
-
-// Setup env vars before requiring functions
-// const hello = require('./hello');
-
-// module.exports.hello = hello.handler;
+module.exports.handler = (event, context, cb) => {
+  cb(null, { message: 'Horray! You ran a function!' });
+};

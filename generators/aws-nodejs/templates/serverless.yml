@@ -1,38 +1,58 @@
 service: <%- serviceName %>
+frameworkVersion: ">=1.11.0 <2.0.0"
 provider:
   name: aws
-  runtime: nodejs4.3
-
-custom:
-  packageEnv:
-    fileName: .env-${opt:stage}
+  runtime: nodejs6.10
+  profile: ${self:custom.config.profile}
+  region: <$- awsRegion %>
 
 plugins:
-  - serverless-plugin-package-dotenv-file
-  - serverless-offline
-  - serverless-run-function-plugin
+  - serverless-plugin-aws-alerts
+  - serverless-plugin-crypt
+  - serverless-plugin-simulate
+
+custom:
+  config: ${file(./config/${opt:stage}.yml):config}
+
+  crypt:
+    aws:
+      kmsKeyId: ${self:custom.config.kmsKeyId}
+
+  alerts:
+    stages:
+      - production
+    topics:
+      ok:
+        topic: ${self:service}-${opt:stage}-alerts-ok
+      alarm:
+        topic: ${self:service}-${opt:stage}-alerts-alarm
+      insufficientData:
+        topic: ${self:service}-${opt:stage}-alerts-insufficientData
 
 package:
   exclude:
+    - config/**
     - coverage/**
+    - migrations/**
     - node_modules/**
     - src/package.json
-    - test/**
+    - src/**/*.test.js
     - .editorconfig
     - .env-*
-    - .envrc
     - .eslint*
+    - .envrc
     - .gitignore
     - .node-version
     - .travis.yml
-    - deploy.sh
-    - install.sh
+    - .yarnrc
+    - '*.sh'
     - package.json
+    - yarn.lock
     - README.md
 
 functions:
-  hello:
-    handler: src/index.hello
+  # hello:
+  #   handler: src/hello
 
 #resources:
 #  Resources:

@@ -20,7 +20,7 @@
     "chalk": "^1.0.0",
     "deep-extend": "^0.4.1",
     "inquirer-npm-name": "^2.0.0",
-    "yeoman-generator": "^0.23.0",
+    "yeoman-generator": "^1.1.1",
     "yosay": "^1.0.0"
   },
   "devDependencies": {

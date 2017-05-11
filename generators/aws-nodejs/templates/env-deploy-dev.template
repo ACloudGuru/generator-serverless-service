@@ -1,2 +1,0 @@
-AWS_PROFILE=<%- awsProfile %>
-AWS_REGION=<%- awsRegion %>

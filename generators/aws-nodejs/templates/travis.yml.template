@@ -5,10 +5,9 @@ node_js:
 env:
   global:
     - AWS_REGION=<%- awsRegion %>
-<% if(useSnyk || useStoredEnvVars) { %>
+<% if(useSnyk) { %>
 before_install:
 <% if(useSnyk) { %>  - travis_retry npm i -g snyk<% } %>
-<% if(useStoredEnvVars) { %>  - "./decrypt-env-vars.sh"<% } %>
 <% } %>
 install:
   - travis_retry ./install.sh
