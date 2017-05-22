@@ -19,32 +19,21 @@ describe('generator-serverless-service:aws-nodejs', function() {
   const baseFiles = [
     'src/index.js',
     'src/package.json',
-    'test/integration/index.js',
-    'test/unit/index.js',
-    'test/index.js',
-    'test/src-path.js',
-    'test/src-require.js',
     '.editorconfig',
-    '.env-deploy-dev',
-    '.env-production',
-    '.env-staging',
     '.gitignore',
     '.node-version',
     '.travis.yml',
-    'deploy.sh',
-    'event.json',
-    'install.sh',
     'package.json',
     'README.md',
     'serverless.yml'
   ];
-  const dirEnvFiles = [
-    '.envrc'
-  ];
   const esLintFiles = [
-    'test/.eslintrc',
     '.eslintignore',
     '.eslintrc.yml'
+  ];
+
+  const jestFiles = [
+    'src/index.test.js'
   ];
 
   describe('with useSnyk', () => {
@@ -76,6 +65,21 @@ describe('generator-serverless-service:aws-nodejs', function() {
       assert.noFile(esLintFiles);
     });
   });
+  describe('with useMocha', () => {
+    before(() => helpers
+          .run(generatorPath)
+          .withPrompts(Object.assign(baseProps, {
+            useJest: true
+          }))
+          .toPromise()
+    );
+
+    it('creates files', () => {
+      const withJestFiles = baseFiles.concat(jestFiles);
+      assert.file(withJestFiles);
+      assert.noFile(esLintFiles);
+    });
+  });
 
   describe('with useEslint', () => {
     before(() => helpers
@@ -89,21 +93,6 @@ describe('generator-serverless-service:aws-nodejs', function() {
     it('creates files', () => {
       const withEsLintFiles = baseFiles.concat(esLintFiles);
       assert.file(withEsLintFiles);
-    });
-  });
-
-  describe('with useDirenv', () => {
-    before(() => helpers
-          .run(generatorPath)
-          .withPrompts(Object.assign(baseProps, {
-            useDirenv: true
-          }))
-          .toPromise()
-    );
-
-    it('creates files', () => {
-      const withDirenvFiles = baseFiles.concat(dirEnvFiles);
-      assert.file(withDirenvFiles);
     });
   });
 });
