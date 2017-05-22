@@ -29,6 +29,11 @@ module.exports = class extends Generator {
       },
       {
         type: 'confirm',
+        name: 'installServerlessLocally',
+        message: 'Would you like to install serverless locally?'
+      },
+      {
+        type: 'confirm',
         name: 'useJest',
         message: 'Would you like to install jest for testing?'
       },
@@ -83,8 +88,8 @@ module.exports = class extends Generator {
       }
     };
 
-    if(this.props.useDirenv) {
-      serverlessConfig.devDependencies["serverless"] = "^1.0.0";
+    if(this.props.installServerlessLocally) {
+      serverlessConfig.devDependencies["serverless"] = "^1.12.0";
     }
 
     extend(pkg, serverlessConfig);
